@@ -1,1 +1,2 @@
-lesson_1_task_2.py
+my_age = 45
+print(45 + 3)
