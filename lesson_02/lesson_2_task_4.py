@@ -3,10 +3,10 @@ def fizz_buzz(n):
         if (n % 3 == 0) and (n % 5) == 0:
             print("FizzBuzz")
         elif n % 5 == 0:
-            print ("Buzz")
+            print("Buzz")
         elif n % 3 == 0:
-            print ("Fizz")
+            print("Fizz")
         else:
-            print (n)
+            print(n)          
 n = int(input("Введите целое число: "))
 fizz_buzz(n)
