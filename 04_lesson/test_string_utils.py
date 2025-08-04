@@ -158,7 +158,7 @@ def test_is_empty(string, result):
     ([], "крот", ""),
 ])
 def test_list_to_string(lst, joiner, result):
-    if joiner is None:
+    if joiner == None:
         res = utils.list_to_string(lst)
     else:
         res = utils.list_to_string(lst, joiner)
