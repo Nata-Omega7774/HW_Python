@@ -1,0 +1,10 @@
+# config.py
+config.py
+
+# Токены и секреты
+*.env
+.env
+secrets.py
+
+# PyCharm
+.idea/
