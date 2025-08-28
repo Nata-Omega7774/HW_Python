@@ -5,8 +5,7 @@ from config import API_TOKEN  # Импортируем токен
 BASE_URL = "https://yougile.com/api-v2"
 
 
-class TestProjectsAPI:
-    """Тесты для методов работы с проектами Yougile"""
+"""Тесты для методов работы с проектами Yougile"""
 
     @pytest.fixture
     def auth_headers(self):
@@ -15,23 +14,17 @@ class TestProjectsAPI:
             "Content-Type": "application/json"
         }
 
-    def create_temp_project(self, auth_headers):
+    def create_temp_project(self, auth_headers, title):
         """Создание временного проекта"""
-        data = {
-            "title": "Temp Project for Test",
-            "description": "Temporary project"
-        }
+        data = {"title": title}
 
         response = requests.post(
             f"{BASE_URL}/projects",
             headers=auth_headers,
-            json=data,
-            timeout=10
-        )
+            json=data
+            )
 
-        if response.status_code == 201:
-            return response.json().get("id")
-        return None
+        return response.json()
 
     def delete_project(self, auth_headers, project_id):
         """Удаление проекта"""
@@ -56,24 +49,13 @@ class TestProjectsAPI:
         if response.status_code == 401:
             pytest.skip("Неверный API токен. Пожалуйста, укажите правильный токен в config.py")
 
-    def test_create_project_positive(self, auth_headers):
+    def test_create_project_positive():
         """Позитивный тест создания проекта"""
-        # Сначала проверяем авторизацию
-        auth_check = requests.get(f"{BASE_URL}/projects", headers=auth_headers)
-        if auth_check.status_code == 401:
-            pytest.skip("Неверный API токен")
 
-        data = {
-            "title": "New Test Project",
-            "description": "Test description"
-        }
+        title = "New Test Project"
 
-        response = requests.post(
-            f"{BASE_URL}/projects",
-            headers=auth_headers,
-            json=data,
-            timeout=10
-        )
+        response = create_temp_project(title)
+        print(response)
 
         assert response.status_code == 201, f"Expected 201, got {response.status_code}. Response: {response.text}"
         assert response.json()["title"] == data["title"]
@@ -95,7 +77,6 @@ class TestProjectsAPI:
 
         response = requests.post(
             f"{BASE_URL}/projects",
-            headers=auth_headers,
             json=data,
             timeout=10
         )
